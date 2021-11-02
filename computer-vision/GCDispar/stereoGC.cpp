@@ -79,7 +79,7 @@ float rho(float c) {
     return sqrt(1 - c);
 }
 int identifier(int x, int y, int d, int nx, int ny, int nd) {
-    return d + (y * nd) + (x * ny * nd);
+    return d + nd * (x + y*nx);
 }
 // End custom functions
 
@@ -143,55 +143,49 @@ int main() {
     /////  BEGIN CODE TO COMPLETE: define appropriate graph G
     /////
 
-    Graph<int,int,int> G(nx*ny*nd, 3*nx*ny*nd - nx*ny - nx*nd - ny*nd);
+    Graph<int,int,int> G(nx*ny*nd, nx*ny*nd);
     G.add_node(nx*ny*nd);
     // 1) For each pixel (x,y) create nd nodes from source to sink
     for (int x=0; x < nx; x++) {
         for (int y=0; y < ny; y++) {
-            for (int d=dmin; d <= dmax; d++) {
-                if ((x + d)*zoom + n < I2.width()) {
-                    int node = identifier(x, y, d, nx, ny, nd);
-                    float weight = wcc * rho(zncc(I1, I1M, I2, I2M, x*zoom + n, y*zoom + n, (x + d)*zoom + n, y*zoom + n, n));
-                    // Agregar Kp????
-                    // cout << "weights " << weight << endl;
-                    if (d == dmin) {
-                        // Connect source to node
-                        G.add_tweights(node, weight, 0);
-                    }
-                    else if (d == dmax) {
-                        // Connect node to sink
-                        G.add_tweights(node, 0, weight);
-                    }
-                    else { // dmin < d < dmax
-                        // Connect to previous node
-                        int prev = identifier(x, y, d-1, nx, ny, nd);
-                        G.add_edge(prev, node, weight, INF); // REVISAR
-                    }
+            int num_neighbors=4;
+            if (x == 0 || x == nx-1) {
+                num_neighbors -= 1;
+            }
+            if (y == 0 || y == ny-1) {
+                num_neighbors -= 1;
+            }
+            auto Kp = (nd-1) * num_neighbors * lambda;
+            for (int d=0; d < nd; d++) {
+                int disparity = d + dmin;
+                int current_node = identifier(x, y, d, nx, ny, nd);
+                int next_node = identifier(x, y, d+1, nx, ny, nd);
+
+                float node_weight = wcc*rho(zncc(I1, I1M, I2, I2M, x*zoom+n, y*zoom+n, (x+disparity)*zoom+n, y*zoom+n, n)) + Kp;
+                if (d == 0) {
+                    // Conect source to node
+                    G.add_tweights(current_node, node_weight, 0);
+
+                    // Conect the first node to the second node
+                    float second_node_weight = wcc*rho(zncc(I1, I1M, I2, I2M, x*zoom+n, y*zoom+n, (x+disparity+1)*zoom+n, y*zoom+n, n)) + Kp;
+                    G.add_edge(current_node, next_node, second_node_weight, INF);
                 }
-            }
-        }
-    }
-    // 2) Create links between neighbor pixels
-    for (int x=0; x < nx; x++) {
-        for (int y=0; y < ny; y++) {
-            for (int d=dmin; d<=dmax; d++) {
-                if ((x + d)*zoom + n < I2.width()) {
-                    if (x > 0) {
-                        G.add_edge(identifier(x-1, y, d, nx, ny, nd), identifier(x, y, d, nx, ny, nd), lambda, lambda);
-                    }
-                    if (y > 0) {
-                        G.add_edge(identifier(x, y, d, nx, ny, nd), identifier(x, y-1, d, nx, ny, nd), lambda, lambda);
-                    }
-                    if (y < ny - 1) {
-                        G.add_edge(identifier(x, y, d, nx, ny, nd), identifier(x, y+1, d, nx, ny, nd), lambda, lambda);
-                    }
-                    if (x < nx - 1) {
-                        G.add_edge(identifier(x, y, d, nx, ny, nd), identifier(x+1, y, d, nx, ny, nd), lambda, lambda);
-                    }
+                else if (d == nd - 1) {
+                    // Conect last node to the sink
+                    G.add_tweights(current_node, 0, node_weight);
+                }
+                else {
+                    G.add_edge(current_node, next_node, node_weight, INF);
+                }
 
+                // Add weight to neigbhors pixels
+                if (x < nx - 1) {
+                    G.add_edge(identifier(x, y, d, nx, ny, nd), identifier(x+1, y, d, nx, ny, nd), lambda, lambda);
+                }
+                if (y < ny -1) {
+                    G.add_edge(identifier(x, y, d, nx, ny, nd), identifier(x, y+1, d, nx, ny, nd), lambda, lambda);
+                }           
             }
-            }
-
         }
     }
 
@@ -212,12 +206,13 @@ int main() {
             ///// Extract disparity from minimum cut
             /////------------------------------------------------------------
             /////  BEGIN CODE TO BE COMPLETED: define disparity map D from graph G and minimum cut
-            for (int d=dmin; d <= dmax; d++) {
-                int node=identifier(i, j, d, nx, ny, nd);
-                if (G.what_segment(node) == Graph<int,int,int>::SOURCE) {
-                    D(i,j) = 255 * (d - dmin) / nd;
-                }
+            int d=0;
+            int node=identifier(i, j, d, nx, ny, nd);
+            while (d < nd && G.what_segment(node) == Graph<int,int,int>::SOURCE){
+                d++;
+                node=identifier(i, j, d, nx, ny, nd);
             }
+            D(i,j) = d + dmin;
             /////  END CODE TO BE COMPLETED
             /////------------------------------------------------------------
         }
