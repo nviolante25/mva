@@ -1,4 +1,4 @@
-# Mathematiques, Vision, Apprentisage 2021-2020
+# Mathematiques, Vision, Apprentisage 2021-2022
 
 This repo contains all the homeworks and projects I did during the [MVA](https://www.master-mva.com/) masters at ENS Paris-Saclay
 
