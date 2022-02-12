@@ -7,3 +7,6 @@
 
 ## Project
 I analyzed the paper [Gestaltic Grouping of Line Segments](https://www.ipol.im/pub/art/2018/194/)
+
+---
+[Course](https://www.dropbox.com/sh/4oqlqne8hodq97d/AAAXpvP45vs-R7RZx57jPyTva?dl=0) by Jean-Michel Morel and Rafael Grompone

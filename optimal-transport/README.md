@@ -8,3 +8,6 @@
 
 ## Project
 I implemented the paper [Learning with a Wasserstein Loss](https://arxiv.org/abs/1506.05439) and used it to train neural networks for ordinal classification.
+
+---
+[Course](https://docs.google.com/document/d/1HBD1-iNNRJQiCSt6iIw_zZBd2YdGyaocokCme_6NLhI/edit) by Gabriel Peyré
