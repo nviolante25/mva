@@ -4,7 +4,7 @@
 Classical denosing algorithms
 
 ## Second part
-Deep-learning based approches for denoising
+Deep-learning based approaches for denoising
 1. [Introduction to CNN denoising](part-2/tp1_denoising.ipynb)
 2. [A deeper understanding CNN denoising](part-2/tp2_denoising.ipynb)
 3. [Noise to Noise](part-2/tp3_denoising.ipynb)
