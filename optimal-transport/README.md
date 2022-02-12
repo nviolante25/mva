@@ -1,4 +1,4 @@
-# Computation Optimal Transport
+# Computational Optimal Transport
 
 ## Numerical Tours
 1. [Optimal Transport with Linear Programming](numerical-tours/numerical_tour1.ipynb)
