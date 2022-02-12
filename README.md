@@ -11,3 +11,7 @@
 ## Second semester
 - [Detection Theory](detection-theory)
 - [Deep Learning in Practice](deep-learning-in-practice)
+- [Algorithms for Speech Recognition and NLP](algorithms-speech)
+- [Modelling in Neuroscience](neuro)
+- [Sequential Learning](sequential-learning)
+- [Deep Reinforcement Learning](deep-reinforcement)
