@@ -6,3 +6,4 @@
 - [Computational Optimal Transport](optimal-transport)
 - [Reinforcement Learning](reinforcement)
 - [Probabilistic Graphical Models](probabilistic-graphical-models)
+- [Image Denoising](image-denoising)
