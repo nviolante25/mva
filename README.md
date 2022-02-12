@@ -7,3 +7,6 @@
 - [Reinforcement Learning](reinforcement)
 - [Probabilistic Graphical Models](probabilistic-graphical-models)
 - [Image Denoising](image-denoising)
+
+## Second semester
+- [Detection Theory](detection-theory)
