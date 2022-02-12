@@ -1,5 +1,7 @@
 # Mathematiques, Vision, Apprentisage 2021-2020
 
+This repo contains all the homeworks and projects I did during the [MVA](https://www.master-mva.com/) masters at ENS Paris-Saclay
+
 ## First semester
 - [3D Computer Vision](computer-vision)
 - [Convex Optimization](convex-optimization)
