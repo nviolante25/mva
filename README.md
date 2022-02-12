@@ -10,3 +10,4 @@
 
 ## Second semester
 - [Detection Theory](detection-theory)
+- [Deep Learning in Practice](deep-learning-in-practice)
