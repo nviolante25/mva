@@ -14,6 +14,6 @@ This repo contains all the homeworks and projects I did during the [MVA](https:/
 - [Detection Theory](detection-theory)
 - [Deep Learning in Practice](deep-learning-in-practice)
 - [Algorithms for Speech and NLP](algorithms-speech)
-- [Modelling in Neuroscience](neuro)
+- [Modelling in Neuroscience](neuroscience)
 - [Sequential Learning](sequential-learning)
 - [Deep Reinforcement Learning](deep-reinforcement)
